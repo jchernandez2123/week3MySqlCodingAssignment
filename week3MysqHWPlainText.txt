@@ -1,0 +1,103 @@
+create schema kindSpaceMediaApp;
+
+use kindSpaceMediaApp;
+
+CREATE TABLE user
+  (
+     userId          INT NOT NULL auto_increment,
+     firstName       VARCHAR(50) NULL,
+     lastName        VARCHAR(50) NULL,
+     userName        VARCHAR(50) NOT NULL,
+     email           VARCHAR(75) NOT NULL,
+     password        VARCHAR(10) NOT NULL,
+     createdDateTime DATETIME NOT NULL,
+     address         VARCHAR(50) NULL,
+     zip             INT NOT NULL,
+     country         VARCHAR(50) NOT NULL,
+     PRIMARY KEY (userId)
+  ); 
+
+CREATE TABLE post
+  (
+     postId          INT NOT NULL auto_increment,
+     userId          INT NOT NULL,
+     title           VARCHAR(100) NOT NULL,
+     body            TEXT NOT NULL,
+     createdDateTime DATETIME NOT NULL,
+     updatedDateTime DATETIME NULL,
+     deletedDateTime DATETIME NULL,
+     PRIMARY KEY (postId),
+     CONSTRAINT fk_post_user 
+     FOREIGN KEY (userId) 
+     REFERENCES user (userid)
+  ); 
+  
+  CREATE TABLE comment
+  (
+     commentId       INT NOT NULL auto_increment,
+     postId          INT NOT NULL,
+     userId          INT NOT NULL,
+     body            TEXT NOT NULL,
+     createdDateTime DATETIME NOT NULL,
+     updatedDateTime DATETIME NOT NULL,
+     deletedDateTime DATETIME NOT NULL,
+     PRIMARY KEY (commentId),
+     CONSTRAINT fk_comment_post 
+     FOREIGN KEY (postId) 
+     REFERENCES post(postId),
+     CONSTRAINT fk_comment_user 
+     FOREIGN KEY (userId) 
+     REFERENCES user(userId)
+  ); 
+  
+select now();
+select * from user;
+
+  insert into user (firstName, lastName, userName, email, password, 
+  address, zip, country,createdDateTime)
+  values ('Optimus' , 'Prime', 'prime1', 'DecepticonSlayer@Cybertron.com', 'AllSpark1', 
+  '123 The Great Dome', '11111', 'Cybertron Planet', now());
+  
+  
+  
+  insert into user (firstName, lastName, userName, email, password, 
+  address, zip, country,createdDateTime)
+  values ('Mega' , 'Tron', 'Villan1', 'AutobotHater@Cybertron.com', 'NonSpark1', 
+  '321 The Dome', '22222', 'Other side of Cybertron Planet', now());
+
+insert into post(userId, title, body, createdDateTime,updatedDateTime, deletedDateTime)
+values (1, 'Cybertron First Post', 'Hello Cybertron we want Peace', now(), now(),now());
+  
+insert into post(userId, title, body, createdDateTime,updatedDateTime, deletedDateTime)
+values (2, 'Mega Trons First Post', 'Find All Autobots and bring them to me!!!', now(), now(),now());
+  
+  insert into comment (postId, userId, body, createdDateTime, updatedDateTime, deletedDateTime)
+  values (1, 1, 'Calling All Autobots', now(), now(), now());
+  
+  insert into comment (postId, userId, body, createdDateTime, updatedDateTime, deletedDateTime)
+  values (2, 2, 'We will not give you peace Optimus we will fight!!!', now(),now(),now());
+  
+  insert into comment (postId, userId, body, createdDateTime, updatedDateTime, deletedDateTime)
+  values (2, 1, 'We will not give up Megatron!!', now(), now(), now());
+  
+  
+  
+  
+  
+  
+  select * from user;
+  select * from post;
+  select * from comment;
+  
+  select * from user u 
+  join post p on u.userId = p.userId;
+  
+  select * from user u 
+  join comment c on u.userId = c.userId;
+  
+  select * from user u
+  join post p on u.userId =  p.userId
+  join comment c on p.postId = c.postId;
+  
+  
+  
